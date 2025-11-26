@@ -4,7 +4,7 @@
 Работает плавно, нативно, поддерживает скролл, свайпы и выбор диапазона — без сторонних date-picker библиотек.
 
 ## Клонировать репозиторий
-git clone https://github.com/<your-repo>.git
+git clone https://github.com/AplusO1/Mobile-Date-Range-Picker-Next.js-TypeScript-
 cd my-calendar
 
 ## Установить зависимости
