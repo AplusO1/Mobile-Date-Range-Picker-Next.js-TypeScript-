@@ -1,66 +1,89 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
 
-export default function Home() {
+import { useState } from "react";
+import { Box, Paper, Typography } from "@mui/material";
+import MobileDateRangeCalendar from "@/components/MobileDateRangeCalendar/MobileDateRangeCalendar";
+import type { DateRange } from "@/components/MobileDateRangeCalendar/types";
+
+export default function HomePage() {
+  const [range, setRange] = useState<DateRange>({
+    startDate: null,
+    endDate: null,
+  });
+
+  const formatDate = (d: Date | null) => (d ? d.toLocaleDateString() : "—");
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <Box
+      sx={{
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        bgcolor: "background.default",
+      }}
+    >
+      {/* верхний блок с инфой и выбранным диапазоном */}
+      <Box
+        sx={{
+          px: 2,
+          pt: 2,
+          textAlign: "center",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Typography variant="h5" fontWeight={600}>
+          Choose your stay
+        </Typography>
+
+        <Typography variant="body2" color="text.secondary">
+          Custom mobile date range picker
+        </Typography>
+
+        <Paper
+          sx={{
+            mt: 2,
+            px: 2,
+            py: 1.5,
+            borderRadius: 999,
+            width: "100%",
+            maxWidth: 600,
+            mx: "auto",
+            textAlign: "center",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Typography variant="subtitle2">Selected range</Typography>
+
+          <Typography variant="body1">
+            {formatDate(range.startDate)} — {formatDate(range.endDate)}
+          </Typography>
+        </Paper>
+      </Box>
+
+      {/* сам календарь */}
+      <Box sx={{ flex: 1, p: 2 }}>
+        <Paper
+          sx={{
+            width: "100%",
+            maxWidth: 600,
+            mx: "auto",
+            height: "min(600px, calc(100vh - 170px))",
+            borderRadius: 4,
+            overflow: "hidden",
+          }}
+        >
+          <MobileDateRangeCalendar
+            initialMonth={new Date()}
+            monthsBefore={0}
+            monthsAfter={6}
+            onChange={setRange}
+          />
+        </Paper>
+      </Box>
+    </Box>
   );
 }
